@@ -1,0 +1,36 @@
+# General
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.bak
+*.tmp
+*~
+
+# IDEs and editors
+/.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Rust project specific
+/Backend/target/
+/Backend/**/Cargo.lock
+/Backend/**/*~ 
+/Backend/**/vendor/
+
+# React project specific
+/WeddingPage/node_modules/
+/WeddingPage/build/
+/WeddingPage/.env
+/WeddingPage/.env.local
+/WeddingPage/.env.development.local
+/WeddingPage/.env.test.local
+/WeddingPage/.env.production.local
+/WeddingPage/npm-debug.log
+/WeddingPage/yarn-error.log
+
+# Log files
+*.log
+
