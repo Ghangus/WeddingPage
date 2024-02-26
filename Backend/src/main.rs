@@ -1,12 +1,12 @@
 use actix_cors::Cors;
 use actix_files::NamedFile;
-use actix_web::http::header::ContentDisposition;
-use actix_web::{http::header, web, App, Error, HttpRequest, HttpResponse, HttpServer, Responder};
+use actix_web::{error, http::header, web, App, HttpResponse, HttpServer, Responder};
 use rand::Rng;
 use std::fs;
 
 fn filelist() -> Vec<String> {
-    let path = "/home/pi/Nextcloud/Photos/WeddingImages";
+    let path = "/Users/fredrikcarlsson/Development/WeddingPage/Backend/DefaultImages/";
+    //let path = "/home/pi/Nextcloud/Photos/WeddingImages";
     let files = fs::read_dir(path).unwrap();
 
     let mut file_names = Vec::new();
@@ -43,20 +43,12 @@ async fn get_all_files() -> impl Responder {
     HttpResponse::Ok().body(file_names.join("\n"))
 }
 
-async fn download_file() -> Result<NamedFile, Error> {
-    // Specify the path to the file you want to serve
-    let file = NamedFile::open(random_file())?;
+async fn download_file() -> Result<NamedFile, actix_web::error::Error> {
+    let path = "/Users/fredrikcarlsson/Development/WeddingPage/Backend/DefaultImages/";
+    let file_path = path.to_string() + &random_file();
+    println!("File path = {}", file_path);
 
-    // Optionally, set content disposition (e.g., attachment; filename="filename.ext")
-    // This prompts the browser to download the file instead of trying to open it.
-    let cd = ContentDisposition {
-        disposition: actix_web::http::header::DispositionType::Attachment,
-        parameters: vec![actix_web::http::header::DispositionParam::Filename(
-            "filename.ext".to_string(), // Update this filename
-        )],
-    };
-
-    Ok(file.set_content_disposition(cd))
+    NamedFile::open(file_path).map_err(|_| error::ErrorNotFound("File not found!"))
 }
 
 #[actix_web::main]
