@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
 
-function WeddingPicture({ picturePath }) {
+function PictureAsPath({ picturePath }) {
   return (
     <div class="overflow-hidden w-screen h-screen flex justify-center items-center">
       <img
         class="w-full h-full object-scale-down"
         src={picturePath}
+        alt="Wedding"
+      />
+    </div>
+  );
+}
+
+function PictureAsFile({ picture }) {
+  return (
+    <div class="overflow-hidden w-screen h-screen flex justify-center items-center">
+      <img
+        class="w-full h-full object-scale-down"
+        src={picture}
         alt="Wedding"
       />
     </div>
@@ -50,9 +62,29 @@ function fetchImagePath(setImageCallback) {
     })
     .catch((error) => {
       console.error("Error fetching image path using default images:", error);
-      return Math.random() > 0.5
-        ? setImageCallback(image1)
-        : setImageCallback(image2);
+      // return Math.random() > 0.5
+      //   ? setImageCallback(image1)
+      //   : setImageCallback(image2);
+    });
+}
+
+function downladPicture(setImageCallback) {
+  const apiUrl = "http://localhost:8080/get_file";
+  const timestampedURL = apiUrl + "?timestamp=" + new Date().getTime();
+  console.log("downladPicture fron URL: ", apiUrl);
+  fetch(timestampedURL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.blob();
+    })
+    .then((data) => {
+      var imageUrl = URL.createObjectURL(data);
+      setImageCallback(imageUrl);
+    })
+    .catch((error) => {
+      console.error("Error fetching image path using default images:", error);
     });
 }
 
@@ -73,7 +105,7 @@ function App() {
   const [weddingPicturePath, setPicturePath] = useState(
     "/WeddingImages/IMG_3884.jpeg",
   );
-
+  // const [pictureFile, setPictureFile] = useState(null);
   const [showDev, setShowDev] = useState(false);
 
   // Wrap fetchImagePath call to provide it with setPicturePath
@@ -81,11 +113,13 @@ function App() {
 
   useEffect(() => {
     // Fetch the initial image path
-    fetchImagePath(setPicturePath);
+    //fetchImagePath(setPicturePath);
+    downladPicture(setPicturePath);
 
     // Set an interval to update the image path every 10 seconds
     const interval = setInterval(() => {
-      fetchImagePath(setPicturePath);
+      // fetchImagePath(setPicturePath);
+      downladPicture(setPicturePath);
     }, 10000);
 
     // Clear the interval when the component unmounts
@@ -107,7 +141,7 @@ function App() {
           ⚙️
         </div>
       </div>
-      <WeddingPicture picturePath={weddingPicturePath} />
+      <PictureAsPath picturePath={weddingPicturePath} />
       <QrCodeHeader headerText />
     </div>
   );
