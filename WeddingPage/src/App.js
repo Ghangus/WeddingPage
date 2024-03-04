@@ -69,7 +69,8 @@ function fetchImagePath(setImageCallback) {
 }
 
 function downladPicture(setImageCallback) {
-  const apiUrl = "http://localhost:8080/get_file";
+  // const apiUrl = "http://localhost:8080/get_file";
+  const apiUrl = "http://192.168.50.166:8080/get_file";
   const timestampedURL = apiUrl + "?timestamp=" + new Date().getTime();
   console.log("downladPicture fron URL: ", apiUrl);
   fetch(timestampedURL)
