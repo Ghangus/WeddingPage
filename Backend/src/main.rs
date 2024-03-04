@@ -5,8 +5,8 @@ use rand::Rng;
 use std::fs;
 
 fn filelist() -> Vec<String> {
-    //let path = "/Users/fredrikcarlsson/Development/WeddingPage/Backend/DefaultImages/";
-    let path = "/home/pi/Nextcloud/Photos/WeddingImages";
+    let path = "/Users/fredrikcarlsson/Development/WeddingPage/Backend/DefaultImages/";
+    // let path = "/home/pi/Nextcloud/Photos/WeddingImages";
     let files = fs::read_dir(path).unwrap();
 
     let mut file_names = Vec::new();
@@ -44,8 +44,8 @@ async fn get_all_files() -> impl Responder {
 }
 
 async fn download_file() -> Result<NamedFile, actix_web::error::Error> {
-    //let path = "/Users/fredrikcarlsson/Development/WeddingPage/Backend/DefaultImages/";
-    let path = "/home/pi/Nextcloud/Photos/WeddingImages";
+    let path = "/Users/fredrikcarlsson/Development/WeddingPage/Backend/DefaultImages/";
+    // let path = "/home/pi/Nextcloud/Photos/WeddingImages";
     let file_path = path.to_string() + &random_file();
     println!("File path = {}", file_path);
 
@@ -57,7 +57,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let cors = Cors::default()
             .send_wildcard()
-            .allowed_methods(vec!["GET", "POST"]) // Specify allowed methods
+            .allowed_methods(vec!["GET", "POST"])
             .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
             .allowed_header(header::CONTENT_TYPE)
             .max_age(3600);
