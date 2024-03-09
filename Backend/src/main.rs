@@ -56,7 +56,7 @@ async fn download_file() -> Result<NamedFile, actix_web::error::Error> {
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         let cors = Cors::default()
-            .allowed_origin("http://192.168.50.208:3000")
+            .allowed_origin("http://localhost:3000")
             .send_wildcard()
             .allowed_methods(vec!["GET", "POST"])
             .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
