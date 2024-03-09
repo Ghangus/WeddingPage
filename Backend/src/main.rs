@@ -69,7 +69,7 @@ async fn main() -> std::io::Result<()> {
             .service(web::resource("/get_file").to(download_file))
         // Add other services or configurations as needed
     })
-    .bind("localhost:8080")?
+    .bind("0.0.0.0:8080")?
     .run()
     .await
 }
