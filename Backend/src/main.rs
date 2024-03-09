@@ -14,7 +14,10 @@ fn filelist() -> Vec<String> {
     for file in files {
         if let Ok(file) = file {
             if let Some(file_name) = file.file_name().to_str() {
-                if file_name.to_lowercase().ends_with(".jpeg") {
+                if file_name.to_lowercase().ends_with(".jpeg")
+                    || file_name.to_lowercase().ends_with(".jpg")
+                    || file_name.to_lowercase().ends_with(".png")
+                {
                     file_names.push(file_name.to_string());
                 }
             }
