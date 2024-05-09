@@ -56,15 +56,8 @@ function fetchImagePath(setImageCallback) {
       }
       return response.text();
     })
-    .then((data) => {
-      console.log("Fetched image path:", `/WeddingImages/${data}`);
-      setImageCallback(`/WeddingImages/${data}`);
-    })
     .catch((error) => {
       console.error("Error fetching image path using default images:", error);
-      // return Math.random() > 0.5
-      //   ? setImageCallback(image1)
-      //   : setImageCallback(image2);
     });
 }
 
@@ -103,9 +96,7 @@ function TestButton({ onButtonClick }) {
 }
 
 function App() {
-  const [weddingPicturePath, setPicturePath] = useState(
-    "/WeddingImages/IMG_3884.jpeg",
-  );
+  const [weddingPicturePath, setPicturePath] = useState("");
   // const [pictureFile, setPictureFile] = useState(null);
   const [showDev, setShowDev] = useState(false);
 
